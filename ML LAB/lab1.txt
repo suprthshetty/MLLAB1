@@ -1,0 +1,21 @@
+import csv
+a = []
+with open(r'lab1.csv') as csvfile:
+    for row in csv.reader(csvfile):
+        a.append(row)
+    print(a)
+    print("Total number of training instance:\n",len(a))
+    num_attr = len(a[0])-1
+    print("Initial hypo:\n")
+    hypo = ['0']*num_attr
+    print(hypo)
+    for i in range(0,len(a)):
+        if a[i][num_attr] == 'Yes':
+            for j in range(0,num_attr):
+                if hypo[j] == '0' or hypo[j]==a[i][j]:
+                    hypo = a[i][j]
+                else:
+                    hypo = '?'
+    print("Hypo for train{} instance:\n".format(i+1),hypo)
+    print("Maximally spec hypo is:\n")
+    print(hypo)

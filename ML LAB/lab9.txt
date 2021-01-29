@@ -1,0 +1,18 @@
+import numpy as np
+import pandas as pd
+
+from sklearn import load_iris
+dataset = load_iris()
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(dataset['data'],dataset['target'],test_size=0.3,random_state=1)
+
+from sklearn.neighbors import KNeighborsClassifier
+clf = KNeighborsClassifier(n_neighbors=5)
+clf.fit(xtrain,ytrain)
+
+for i in range(len(xtest)):
+    x=xtest[i]
+pred = clf.predict([x])
+print("Target=",ytest[i],"Predicted=",pred,dataset['target_names']['predict'])
+print("Accuracy:",clf.score(xtest,ytest))

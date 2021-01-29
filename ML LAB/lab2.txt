@@ -1,0 +1,33 @@
+
+import pandas as pd
+data = pd.read_csv(r'C:\Users\HP\Desktop\7th\ML Lab\c1.csv')
+concepts = data.values[:,:-1]
+target = data.values[:,-1]
+
+def learn(concepts,target):
+    s=concepts[0].copy
+    
+    g=[['?' for in range(len(s))] for i in range(len(s))]
+    i=0
+    for h in concepts:
+        if target[i] == 'Yes':
+            for x in range(len(s)):
+                if h[x]!=s[x]:
+                    s[x]=='?'
+                    g[x][x]='?'
+        elif target[i]=='No':
+            for x in range(len(s)):
+                if h[x]!=s[x]:
+                    g[x][x]=s[x]
+        else:
+            g[x][x] = '?'
+        i+=1
+        
+    indices = [i for i,val in enumerate(g) if val == ['?' for i in range(len(s))]]
+    for i in indices:
+        g.remove(['?' for i in range(len(s))])
+    return s,g
+
+s_final,g_final = learn(concepts,target)
+print("Final S:",s_final)
+print("Final G:",g_final)

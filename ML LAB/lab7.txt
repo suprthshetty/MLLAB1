@@ -1,0 +1,16 @@
+import pandas as pd
+data = read_csv(r'lab7.csv')
+heart_disease = pd.DataFrame(data)
+
+from pgmpy.models import BayesianModel
+model = BayesianModel(['age','trestbps'],['age','fbs'],['sex','trestbps'],['exang','trestbps'],['trestbps','heartdisease'],['fbs','heartdisease'],['heartdisease','restecg'],['heartdisease','thalac'],['heartdisease','chol'])
+model.fit(data)
+
+from pgmpy.inference import VariableELimination
+infer = VariableElimination(model)
+
+q = infer.query(variables=['heartdisease'],evidence={'age':28},joint = False)
+print(q['heartdisease'])
+
+q = infer.query(variables=['heartdisease'],evidence={'chol':100},joint = False)
+print(q['heartdisease'])
